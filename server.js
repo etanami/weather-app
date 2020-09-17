@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-projectData = {};
+const projectData = [];
 
 // Require Express to run server and routes
 const express = require('express');
@@ -24,9 +24,28 @@ app.use(express.static('website'));
 // Setup Server
 const port = 3030;
 //to spin up the server
-app.listen(port, listening)
+const server = app.listen(port, listening);
 //callback function
 function listening () {
     console.log("The server works fine!")
-    console.log(`The sever is running on port: ${port}`)
+    console.log(`The port is running on local host: ${port}`)
+}
+
+// responds with JS Object when GET request is made
+app.get('/all', (req, res) => {
+    res.send(projectData)
+})
+
+app.post('/addWeather', addWeather);
+
+function addWeather(req, res) {
+    newEntry = {
+        temperature: req.body.temperature,
+        date: req.body.date,
+        feelings: req.body.feelings
+    }
+
+    projectData.push(newEntry)
+    res.send(projectData);
+    console.log(projectData)
 }
