@@ -1,6 +1,6 @@
 /* Global Variables */
 let baseURL = 'https://api.openweathermap.org/data/2.5/weather?zip=';
-const apiKey = '&appid=edd6ece7ee85efec07d97efd28106c93';
+const apiKey = '&appid=edd6ece7ee85efec07d97efd28106c93&units=imperial';
 
 const dateH = document.getElementById('date');
 const tempH = document.getElementById('temp');
@@ -22,10 +22,10 @@ function performAction(e) {
             date: newDate,
             feelings: feelings
         })
+        .then(
+            updateUI()
+        )
     })
-    .then(
-        updateUI()
-    )
 }
 
 /*Integrating OpenWeatherMap API*/
@@ -64,9 +64,9 @@ const updateUI = async() => {
     const res = await fetch('/all');
     try{
         const fullData = await res.json();
-        dateH.innerHTML = fullData[0].date;
-        tempH.innerHTML = fullData[0].temperature;
-        contentH.innerHTML = fullData[0].feelings;
+        dateH.innerHTML = fullData.date;
+        tempH.innerHTML = fullData.temperature;
+        contentH.innerHTML = fullData.feelings;
     }catch(error) {
         console.log("error", error)
     }
